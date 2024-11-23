@@ -105,3 +105,32 @@ function createRows(data) {
     });
     updateTaskCount(data);
 }
+
+// Funcion para agregar tareas
+function addTask(data) {
+    Swal.fire({
+        text: "¿Quieres guardar esta tarea?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#198754",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, Agregar tarea",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const task = {
+                title: data.get("title"),
+                text: data.get("text"),
+                date: data.get("date"),
+                hour: data.get("hour"),
+                status: "Pendiente",
+            };
+
+            let localTask = JSON.parse(localStorage.getItem("task")) || [];
+            localTask.push(task);
+            localStorage.setItem("task", JSON.stringify(localTask));
+
+            createRows(localTask);
+            taskModal.hide();
+        }
+    });
+}
