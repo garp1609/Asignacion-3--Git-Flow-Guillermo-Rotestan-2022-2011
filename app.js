@@ -40,3 +40,68 @@ todoForm.addEventListener("submit", function (event) {
         todoForm.classList.remove("was-validated");
     }
 });
+
+// Funcion para crear las filas dinamicas en la tabla
+function createRows(data) {
+    listTableBody.innerHTML = ""; 
+    data.forEach((element, index) => {
+        const tr = document.createElement("tr");
+
+        const tdIndex = document.createElement("td");
+        tdIndex.textContent = index + 1;
+
+        const tdName = document.createElement("td");
+        tdName.textContent = element.title;
+
+        const tdDetail = document.createElement("td");
+        tdDetail.textContent = element.text;
+
+        const tdDate = document.createElement("td");
+        tdDate.textContent = element.date;
+
+        const tdHour = document.createElement("td");
+        tdHour.textContent = element.hour;
+
+        const tdStatus = document.createElement("td");
+        const statusLabel = document.createElement("label");
+        statusLabel.className =
+            element.status === "Completado"
+                ? "bg-success text-light p-2 rounded"
+                : "bg-warning text-light p-2 rounded";
+        statusLabel.textContent = element.status;
+        tdStatus.appendChild(statusLabel);
+
+        const tdBtn = document.createElement("td");
+        const btnComplete = document.createElement("button");
+        btnComplete.className =
+            element.status === "Completado" ? "btn btn-success" : "btn btn-warning";
+        btnComplete.innerHTML =
+            element.status === "Completado"
+                ? '<i class="bi bi-check-square"></i>'
+                : '<i class="bi bi-exclamation-square text-light"></i>';
+        btnComplete.addEventListener("click", function () {
+            toggleStatus(index, btnComplete);
+        });
+
+        const btnDelete = document.createElement("button");
+        btnDelete.className = "btn btn-danger ms-2";
+        btnDelete.innerHTML = '<i class="bi bi-trash"></i>';
+        btnDelete.addEventListener("click", function () {
+            deleteTask(index);
+        });
+
+        tdBtn.appendChild(btnComplete);
+        tdBtn.appendChild(btnDelete);
+    
+        tr.appendChild(tdIndex);
+        tr.appendChild(tdName);
+        tr.appendChild(tdDetail);
+        tr.appendChild(tdDate);
+        tr.appendChild(tdHour);
+        tr.appendChild(tdStatus);
+        tr.appendChild(tdBtn);
+    
+        listTableBody.appendChild(tr);
+    });
+    updateTaskCount(data);
+}
