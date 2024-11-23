@@ -166,3 +166,22 @@ function toggleStatus(index, btnComplete) {
     localStorage.setItem("task", JSON.stringify(tasks));
     createRows(tasks);
 }
+
+// Funcion para eliminar una tarea
+function deleteTask(index) {
+    Swal.fire({
+        text: "¿Estás seguro de eliminar esta tarea?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#198754",
+        confirmButtonText: "Si, Eliminar tarea",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let tasks = JSON.parse(localStorage.getItem("task"));
+            tasks.splice(index, 1);
+            localStorage.setItem("task", JSON.stringify(tasks));
+            createRows(tasks);
+        }
+    });
+}
