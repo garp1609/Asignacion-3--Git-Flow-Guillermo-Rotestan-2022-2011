@@ -147,3 +147,22 @@ function updateTaskCount(tasks) {
     taskCount.style.textAlign = "center";
     taskCount.style.margin = "20px 0";
 }
+// Funcion toggle para cambiar el estado de la tarea
+function toggleStatus(index, btnComplete) {
+    let tasks = JSON.parse(localStorage.getItem("task"));
+
+    if (tasks[index].status === "Pendiente") {
+        tasks[index].status = "Completado";
+        btnComplete.classList.remove("btn-warning");
+        btnComplete.classList.add("btn-success");
+        btnComplete.innerHTML = '<i class="bi bi-check-square"></i>';
+    } else {
+        tasks[index].status = "Pendiente";
+        btnComplete.classList.remove("btn-success");
+        btnComplete.classList.add("btn-warning");
+        btnComplete.innerHTML = '<i class="bi bi-exclamation-square"></i>';
+    }
+
+    localStorage.setItem("task", JSON.stringify(tasks));
+    createRows(tasks);
+}
