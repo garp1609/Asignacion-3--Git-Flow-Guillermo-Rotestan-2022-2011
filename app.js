@@ -134,3 +134,16 @@ function addTask(data) {
         }
     });
 }
+
+// Funcion para actualizar el conteo de tareas
+function updateTaskCount(tasks) {
+    const totalTasks = tasks.length;
+    const completedTasks = tasks.filter(task => task.status === "Completado").length;
+    const pendingTasks = totalTasks - completedTasks;
+
+    taskCount.innerHTML = `Total: ${totalTasks} | Completadas: ${completedTasks} | Pendientes: ${pendingTasks}`;
+    document.body.appendChild(taskCount);
+    taskCount.style.color = "white";
+    taskCount.style.textAlign = "center";
+    taskCount.style.margin = "20px 0";
+}
